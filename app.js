@@ -33,7 +33,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, './client/build/index.html')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -49,11 +49,11 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './client/build/index.html'), (error) => {
-    res.status(500).send(error);
-  });
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, './client/build/index.html'), (error) => {
+//     res.status(500).send(error);
+//   });
+// });
 
 // error handler
 app.use(function (err, req, res, next) {
