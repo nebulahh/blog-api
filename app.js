@@ -17,7 +17,6 @@ connectDB();
 
 var app = express();
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -34,7 +33,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, './client/build/index.html')));
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -48,6 +47,12 @@ app.use('/api/refresh', refreshRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './client/build/index.html'), (error) => {
+    res.status(500).send(error);
+  });
 });
 
 // error handler
