@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
 var refreshRouter = require('./routes/refresh');
 const connectDB = require('./config/database');
+const corsOptions = require('./config/corsOptions');
 
 require('dotenv').config({ path: './config/.env' });
 
@@ -21,7 +22,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(
   session({
     secret: process.env.SECRET,
